@@ -81,7 +81,7 @@ void parse_file ( char * filename,
   
   while ( fgets(line, 255, f) != NULL ) {
     line[strlen(line)-1]='\0';
-    printf(":%s:\n",line);  
+    printf(":%s:\n",line); 
   }
 }
 
