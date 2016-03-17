@@ -343,14 +343,15 @@ struct matrix * generate_curve_coefs( double p1, double p2,
   coeffs->m[1][0] = p2;
   coeffs->m[2][0] = p3;
   coeffs->m[3][0] = p4;
-  // Bezier
-  if (type == 1) {
-    curve_gen = make_bezier();
+  // Hermite
+  if (type == 0) {
+    curve_gen = make_hermite();
     matrix_mult(curve_gen, coeffs);
     return coeffs;
-  } //Hermite
-  else if (type == 0) {
-    curve_gen = make_hermite();
+  }
+  //Hermite
+  else if (type == 1) {
+    curve_gen = make_bezier();
     matrix_mult(curve_gen, coeffs);
     return coeffs;
   }

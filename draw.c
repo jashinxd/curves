@@ -63,6 +63,52 @@ void add_curve( struct matrix *points,
 		double x2, double y2, 
 		double x3, double y3, 
 		double step, int type ) {
+  double xOrig, yOrig, x, y, t, aX, bX, cX, dX, aY, bY, cY, dY;
+  struct matrix * coeffsX;
+  struct matrix * coeffsY;
+  t = 0;
+  if (type == 0) {
+    coeffsX = generate_curve_coefs(x0, x1, x2, x3, 0);
+    coeffsY = generate_curve_coefs(y0, y1, y2, y3, 0);
+    aX = coeffsX->m[0][0];
+    bX = coeffsX->m[1][0];
+    cX = coeffsX->m[2][0];
+    dX = coeffsX->m[3][0];
+    aY = coeffsY->m[0][0];
+    bY = coeffsY->m[1][0];
+    cY = coeffsY->m[2][0];
+    dY = coeffsY->m[3][0];
+    xOrig = pow(aX * t, 3) + pow(bX * t, 2) + cX * t + dX;
+    yOrig = pow(aY * t, 3) + pow(bY * t, 2) + cY * t + dY;
+    for (t = step; t <= 1.0000001; t+= step) {
+      x = pow(aX * t, 3) + pow(bX * t, 2) + cX * t + dX;
+      y = pow(aY * t, 3) + pow(bY * t, 2) + cY * t + dY;
+      add_edge(points, xOrig, yOrig, 0, x, y, 0);
+      xOrig = x; 
+      yOrig = y;
+    }
+  }
+  else if (type == 1) {
+    coeffsX = generate_curve_coefs(x0, x1, x2, x3, 1);
+    coeffsY = generate_curve_coefs(y0, y1, y2, y3, 1);
+    aX = coeffsX->m[0][0];
+    bX = coeffsX->m[1][0];
+    cX = coeffsX->m[2][0];
+    dX = coeffsX->m[3][0];
+    aY = coeffsY->m[0][0];
+    bY = coeffsY->m[1][0];
+    cY = coeffsY->m[2][0];
+    dY = coeffsY->m[3][0];
+    xOrig = pow(aX * t, 3) + pow(bX * t, 2) + cX * t + dX;
+    yOrig = pow(aY * t, 3) + pow(bY * t, 2) + cY * t + dY;
+    for (t = step; t <= 1.0000001; t+= step) {
+      x = pow(aX * t, 3) + pow(bX * t, 2) + cX * t + dX;
+      y = pow(aY * t, 3) + pow(bY * t, 2) + cY * t + dY;
+      add_edge(points, xOrig, yOrig, 0, x, y, 0);
+      x0 = x; 
+      y0 = y;
+    }
+  }
 }
 
 /*======== void add_point() ==========
