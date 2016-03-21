@@ -85,12 +85,13 @@ void parse_file ( char * filename,
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
     if (!strcmp(line, "display")) {
-      //clear_screen(s);
-      display(s);
       clear_screen(s);
+      draw_lines(pm, s, c);
+      display(s);
+      //clear_screen(s);
     } else if (!strcmp(line, "apply")) {
       matrix_mult(transform, pm);
-      draw_lines(pm, s, c);
+      //draw_lines(pm, s, c);
     } else if (!strcmp(line, "ident")) {
       ident(transform);
     } else if (!strcmp(line, "quit")) {
@@ -121,13 +122,13 @@ void parse_file ( char * filename,
 	  add_edge(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5]);
 	}
 	else if (!strcmp(line, "circle")) {
-	  add_circle(pm, d_inputs[0], d_inputs[1], d_inputs[2], 0.01);
+	  add_circle(pm, d_inputs[0], d_inputs[1], d_inputs[2], 0.1);
 	}
 	else if (!strcmp(line, "hermite")) {
-	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], d_inputs[8], 0);  
+	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], 0.1, 0);  
 	}
 	else if (!strcmp(line, "bezier")) {
-	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], d_inputs[8], 1);
+	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], 0.1, 1);
 	}
 	else if (!strcmp(line, "scale")) {
 	  struct matrix * m1 = make_scale(d_inputs[0], d_inputs[1], d_inputs[2]); 

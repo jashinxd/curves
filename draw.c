@@ -25,15 +25,16 @@ void add_circle( struct matrix * points,
 		 double r, double step ) {
   double x0, y0, x, y, t;
   t = 0;
-  x0 = r * cos(t * M_PI/180) + cx;
-  y0 = r * sin(t * M_PI/180) + cy;
+  x0 = r * cos(t * M_PI * 2) + cx;
+  y0 = r * sin(t * M_PI * 2) + cy;
   for (t = step; t <= 1.0000001; t+= step) {
-    x = r * cos(t * M_PI/180) + cx;     
-    y = r * sin(t * M_PI/180) + cy;
-    add_edge(points, x0, y0, 0, x, y, 0);            
+    x = r * cos(t * M_PI * 2) + cx;     
+    y = r * sin(t * M_PI * 2) + cy;
+    add_edge(points, x0, y0, 0, x, y, 0);   
     x0 = x; 
     y0 = y;
   }
+  //print_matrix(points);
 }
 
 /*======== void add_curve() ==========
@@ -78,11 +79,11 @@ void add_curve( struct matrix *points,
     bY = coeffsY->m[1][0];
     cY = coeffsY->m[2][0];
     dY = coeffsY->m[3][0];
-    xOrig = pow(aX * t, 3) + pow(bX * t, 2) + cX * t + dX;
-    yOrig = pow(aY * t, 3) + pow(bY * t, 2) + cY * t + dY;
+    xOrig = aX * pow(t, 3) + bX * pow(t, 2) + cX * t + dX;
+    yOrig = aY * pow(t, 3) + bY * pow(t, 2) + cY * t + dY;
     for (t = step; t <= 1.0000001; t+= step) {
-      x = pow(aX * t, 3) + pow(bX * t, 2) + cX * t + dX;
-      y = pow(aY * t, 3) + pow(bY * t, 2) + cY * t + dY;
+      x = aX * pow(t, 3) + bX * pow(t, 2) + cX * t + dX;
+      y = aY * pow(t, 3) + bY * pow(t, 2) + cY * t + dY;
       add_edge(points, xOrig, yOrig, 0, x, y, 0);
       xOrig = x; 
       yOrig = y;
@@ -99,11 +100,11 @@ void add_curve( struct matrix *points,
     bY = coeffsY->m[1][0];
     cY = coeffsY->m[2][0];
     dY = coeffsY->m[3][0];
-    xOrig = pow(aX * t, 3) + pow(bX * t, 2) + cX * t + dX;
-    yOrig = pow(aY * t, 3) + pow(bY * t, 2) + cY * t + dY;
+    xOrig = aX * pow(t, 3) + bX * pow(t, 2) + cX * t + dX;
+    yOrig = aY * pow(t, 3) + bY * pow(t, 2) + cY * t + dY;
     for (t = step; t <= 1.0000001; t+= step) {
-      x = pow(aX * t, 3) + pow(bX * t, 2) + cX * t + dX;
-      y = pow(aY * t, 3) + pow(bY * t, 2) + cY * t + dY;
+      x = aX * pow(t, 3) + bX * pow(t, 2) + cX * t + dX;
+      y = aY * pow(t, 3) + bY * pow(t, 2) + cY * t + dY;
       add_edge(points, xOrig, yOrig, 0, x, y, 0);
       x0 = x; 
       y0 = y;
