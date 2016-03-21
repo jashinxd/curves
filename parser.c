@@ -9,7 +9,6 @@
 #include "matrix.h"
 #include "parser.h"
 
-
 /*======== void parse_file () ==========
 Inputs:   char * filename 
           struct matrix * transform, 
@@ -71,20 +70,77 @@ void parse_file ( char * filename,
 
   FILE *f;
   char line[256];
-  
+  color c;
+  c.red = 0;
+  c.green = 0;
+  c.blue = 255;
+
   clear_screen(s);
 
   if ( strcmp(filename, "stdin") == 0 ) 
     f = stdin;
   else
     f = fopen(filename, "r");
-  
   while ( fgets(line, 255, f) != NULL ) {
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
-    fgets(line, 255, f);
-    printf("2nd-> :%s:\n",line);
+    if (!strcmp(line, "display")) {
+      display(s);
+    } else if (!strcmp(line, "apply")) {
+      matrix_mult(transform, pm);
+      draw_lines(pm, s, c);
+    } else if (!strcmp(line, "ident")) {
+      ident(transform);
+    } else if (!strcmp(line, "quit")) {
+      exit(0);
+    } else {
+      char args[256];
+      fgets(args, 255, f);
+      args[strlen(args)-1]='\0';
+      char * p_args = args;
+      char * inputs[100];
+
+      int i;
+      for (i = 0; (inputs[i] = strsep(&p_args, " ")); i++) {
+	printf("%s ", inputs[i]);
+      }
+      if (!strcmp(line, "save")) {
+	save_extension(s, inputs[0]);
+      } else {
+	inputs[i] = "-1";
+	printf("\n");
+	double d_inputs[100];
+	for (i = 0; strcmp(inputs[i], "-1") != 0; i++) {
+	  d_inputs[i] = strtod(inputs[i], NULL);
+	  printf("%f ", d_inputs[i]);
+	}
+	printf("\n");
+	if (!strcmp(line, "line")) {
+	  add_edge(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5]);
+	}
+	else if (!strcmp(line, "circle")) {
+	  add_circle(pm, d_inputs[0], d_inputs[1], d_inputs[2]);
+	}
+	else if (!strcmp(line, "hermite")) {
+	}
+	else if (!strcmp(line, "bezier")) {
+	}
+	else if (!strcmp(line, "scale")) {
+	}
+	else if (!strcmp(line, "translate")) {
+	}
+	else if (!strcmp(line, "xrotate")) {
+	}
+	else if (!strcmp(line, "yrotate")) {
+	}
+	else if (!strcmp(line, "zrotate")) {
+	}
+      }
+    }
+      /*    if (line == "line") {
+      
+	  add_edge(pm,*/ 
+    //printf("2nd-> :%s:\n",line);
   }
 }
 
-  

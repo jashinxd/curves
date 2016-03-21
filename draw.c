@@ -62,12 +62,12 @@ void add_curve( struct matrix *points,
 		double x1, double y1, 
 		double x2, double y2, 
 		double x3, double y3, 
-		double step, int type ) {
+		double step, double type ) {
   double xOrig, yOrig, x, y, t, aX, bX, cX, dX, aY, bY, cY, dY;
   struct matrix * coeffsX;
   struct matrix * coeffsY;
   t = 0;
-  if (type == 0) {
+  if (type == 0.0) {
     coeffsX = generate_curve_coefs(x0, x1, x2, x3, 0);
     coeffsY = generate_curve_coefs(y0, y1, y2, y3, 0);
     aX = coeffsX->m[0][0];
@@ -88,7 +88,7 @@ void add_curve( struct matrix *points,
       yOrig = y;
     }
   }
-  else if (type == 1) {
+  else if (type == 1.0) {
     coeffsX = generate_curve_coefs(x0, x1, x2, x3, 1);
     coeffsY = generate_curve_coefs(y0, y1, y2, y3, 1);
     aX = coeffsX->m[0][0];
