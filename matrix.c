@@ -272,7 +272,7 @@ struct matrix * make_rotZ(double theta) {
   to generate the coefiecients for a bezier curve
   ====================*/
 struct matrix * make_bezier() {
-  struct matrix * tmp;
+  struct matrix * tmp = new_matrix(4, 4);
   tmp->m[0][0] = 2;
   tmp->m[0][1] = -2;
   tmp->m[0][2] = 1;
@@ -355,5 +355,6 @@ struct matrix * generate_curve_coefs( double p1, double p2,
     matrix_mult(curve_gen, coeffs);
     return coeffs;
   }
+  return coeffs;
 }
 
