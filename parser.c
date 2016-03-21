@@ -85,7 +85,9 @@ void parse_file ( char * filename,
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
     if (!strcmp(line, "display")) {
+      //clear_screen(s);
       display(s);
+      clear_screen(s);
     } else if (!strcmp(line, "apply")) {
       matrix_mult(transform, pm);
       draw_lines(pm, s, c);
@@ -105,7 +107,7 @@ void parse_file ( char * filename,
 	printf("%s ", inputs[i]);
       }
       if (!strcmp(line, "save")) {
-	save_extension(s, inputs[0]);
+	save_extension(s, "pic.png");
       } else {
 	inputs[i] = "-1";
 	printf("\n");
@@ -119,21 +121,38 @@ void parse_file ( char * filename,
 	  add_edge(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5]);
 	}
 	else if (!strcmp(line, "circle")) {
-	  add_circle(pm, d_inputs[0], d_inputs[1], d_inputs[2]);
+	  add_circle(pm, d_inputs[0], d_inputs[1], d_inputs[2], 0.01);
 	}
 	else if (!strcmp(line, "hermite")) {
+	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], d_inputs[8], 0);  
 	}
 	else if (!strcmp(line, "bezier")) {
+	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], d_inputs[8], 1);
 	}
 	else if (!strcmp(line, "scale")) {
+	  struct matrix * m1 = make_scale(d_inputs[0], d_inputs[1], d_inputs[2]); 
+	  matrix_mult(m1, transform);
+	  free_matrix(m1);
 	}
 	else if (!strcmp(line, "translate")) {
+	  struct matrix * m1 = make_translate(d_inputs[0], d_inputs[1], d_inputs[2]); 
+	  matrix_mult(m1, transform);
+	  free_matrix(m1);
 	}
 	else if (!strcmp(line, "xrotate")) {
+	  struct matrix * m1 = make_rotX(d_inputs[0]);
+	  matrix_mult(m1, pm);
+	  free_matrix(m1);
 	}
 	else if (!strcmp(line, "yrotate")) {
+	  struct matrix * m1 = make_rotY(d_inputs[0]);
+	  matrix_mult(m1, pm);
+	  free_matrix(m1);	  
 	}
 	else if (!strcmp(line, "zrotate")) {
+	  struct matrix * m1 = make_rotZ(d_inputs[0]);
+	  matrix_mult(m1, pm);
+	  free_matrix(m1);
 	}
       }
     }

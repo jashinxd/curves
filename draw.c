@@ -25,12 +25,12 @@ void add_circle( struct matrix * points,
 		 double r, double step ) {
   double x0, y0, x, y, t;
   t = 0;
-  x0 = r * cos(t) + cx;
-  y0 = r * sin(t) + cy;
+  x0 = r * cos(t * M_PI/180) + cx;
+  y0 = r * sin(t * M_PI/180) + cy;
   for (t = step; t <= 1.0000001; t+= step) {
-    x = r * cos(t) + cx;                                        
-    y = r * sin(t) + cy;
-    add_edge(points, x0, y0, 0, x, y, 0);                                          
+    x = r * cos(t * M_PI/180) + cx;     
+    y = r * sin(t * M_PI/180) + cy;
+    add_edge(points, x0, y0, 0, x, y, 0);            
     x0 = x; 
     y0 = y;
   }
@@ -62,12 +62,12 @@ void add_curve( struct matrix *points,
 		double x1, double y1, 
 		double x2, double y2, 
 		double x3, double y3, 
-		double step, double type ) {
+		double step, int type ) {
   double xOrig, yOrig, x, y, t, aX, bX, cX, dX, aY, bY, cY, dY;
   struct matrix * coeffsX;
   struct matrix * coeffsY;
   t = 0;
-  if (type == 0.0) {
+  if (type == 0) {
     coeffsX = generate_curve_coefs(x0, x1, x2, x3, 0);
     coeffsY = generate_curve_coefs(y0, y1, y2, y3, 0);
     aX = coeffsX->m[0][0];
@@ -88,7 +88,7 @@ void add_curve( struct matrix *points,
       yOrig = y;
     }
   }
-  else if (type == 1.0) {
+  else if (type == 1) {
     coeffsX = generate_curve_coefs(x0, x1, x2, x3, 1);
     coeffsY = generate_curve_coefs(y0, y1, y2, y3, 1);
     aX = coeffsX->m[0][0];
