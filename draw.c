@@ -42,7 +42,7 @@ Inputs:   struct matrix *points
          double x0
          double y0
          double x1
-         double y1
+         doeuble y1
          double x2
          double y2
          double x3
@@ -69,8 +69,33 @@ void add_curve( struct matrix *points,
   struct matrix * coeffsY;
   t = 0;
   if (type == 0) {
-    coeffsX = generate_curve_coefs(x0, x1, x2, x3, 0);
-    coeffsY = generate_curve_coefs(y0, y1, y2, y3, 0);
+    coeffsX = generate_curve_coefs(x0, x3, x1-x0, x3-x2, 0);
+    coeffsY = generate_curve_coefs(y0, y3, y1-y0, y3-y2, 0);
+  } else if (type == 1) {
+    coeffsX = generate_curve_coefs(x0, x1, x2, x3, 1);
+    coeffsY = generate_curve_coefs(y0, y1, y2, y3, 1);
+  }
+  aX = coeffsX->m[0][0];
+  bX = coeffsX->m[1][0];
+  cX = coeffsX->m[2][0];
+  dX = coeffsX->m[3][0];
+  aY = coeffsY->m[0][0];
+  bY = coeffsY->m[1][0];
+  cY = coeffsY->m[2][0];
+  dY = coeffsY->m[3][0];
+  xOrig = aX * pow(t, 3) + bX * pow(t, 2) + cX * t + dX;
+  yOrig = aY * pow(t, 3) + bY * pow(t, 2) + cY * t + dY;
+  for (t = step; t <= 1.0000001; t+= step) {
+    x = aX * pow(t, 3) + bX * pow(t, 2) + cX * t + dX;
+    y = aY * pow(t, 3) + bY * pow(t, 2) + cY * t + dY;
+    add_edge(points, xOrig, yOrig, 0, x, y, 0);
+    xOrig = x; 
+    yOrig = y;
+  }
+}
+/* else if (type == 1) {
+    coeffsX = generate_curve_coefs(x0, x1, x2, x3, 1);
+    coeffsY = generate_curve_coefs(y0, y1, y2, y3, 1);
     aX = coeffsX->m[0][0];
     bX = coeffsX->m[1][0];
     cX = coeffsX->m[2][0];
@@ -89,28 +114,7 @@ void add_curve( struct matrix *points,
       yOrig = y;
     }
   }
-  else if (type == 1) {
-    coeffsX = generate_curve_coefs(x0, x1, x2, x3, 1);
-    coeffsY = generate_curve_coefs(y0, y1, y2, y3, 1);
-    aX = coeffsX->m[0][0];
-    bX = coeffsX->m[1][0];
-    cX = coeffsX->m[2][0];
-    dX = coeffsX->m[3][0];
-    aY = coeffsY->m[0][0];
-    bY = coeffsY->m[1][0];
-    cY = coeffsY->m[2][0];
-    dY = coeffsY->m[3][0];
-    xOrig = aX * pow(t, 3) + bX * pow(t, 2) + cX * t + dX;
-    yOrig = aY * pow(t, 3) + bY * pow(t, 2) + cY * t + dY;
-    for (t = step; t <= 1.0000001; t+= step) {
-      x = aX * pow(t, 3) + bX * pow(t, 2) + cX * t + dX;
-      y = aY * pow(t, 3) + bY * pow(t, 2) + cY * t + dY;
-      add_edge(points, xOrig, yOrig, 0, x, y, 0);
-      x0 = x; 
-      y0 = y;
-    }
-  }
-}
+  }*/
 
 /*======== void add_point() ==========
 Inputs:   struct matrix * points

@@ -102,7 +102,6 @@ void parse_file ( char * filename,
       args[strlen(args)-1]='\0';
       char * p_args = args;
       char * inputs[100];
-
       int i;
       for (i = 0; (inputs[i] = strsep(&p_args, " ")); i++) {
 	printf("%s ", inputs[i]);
@@ -122,13 +121,13 @@ void parse_file ( char * filename,
 	  add_edge(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5]);
 	}
 	else if (!strcmp(line, "circle")) {
-	  add_circle(pm, d_inputs[0], d_inputs[1], d_inputs[2], 0.1);
+	  add_circle(pm, d_inputs[0], d_inputs[1], d_inputs[2], 0.01);
 	}
 	else if (!strcmp(line, "hermite")) {
-	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], 0.1, 0);  
+	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], 0.01, 0);  
 	}
 	else if (!strcmp(line, "bezier")) {
-	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], 0.1, 1);
+	  add_curve(pm, d_inputs[0], d_inputs[1], d_inputs[2], d_inputs[3], d_inputs[4], d_inputs[5],d_inputs[6], d_inputs[7], 0.01, 1);
 	}
 	else if (!strcmp(line, "scale")) {
 	  struct matrix * m1 = make_scale(d_inputs[0], d_inputs[1], d_inputs[2]); 
